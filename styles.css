@@ -1,0 +1,12 @@
+body {
+  font-family: Roboto;
+}
+
+#canvas circle {
+  fill-opacity: 0.3;
+}
+
+#canvas text {
+  text-anchor: middle;
+  alignment-baseline: central;
+}
