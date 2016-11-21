@@ -55,7 +55,7 @@ $(function () {
   }
 
   var MIRROR_RADIUS = canvasSize / 2;
-  var CHAIN_LEN = 20;
+  var CHAIN_LEN = 40;
   var CHAIN_DIR = vnorm({ x: 0, y: -1 });
 
   var mirror = { type: 'circle', center: { x: 0, y: MIRROR_RADIUS }, radius: MIRROR_RADIUS };
@@ -127,7 +127,7 @@ $(function () {
   inversionCircles.forEach(function (c) {
     allCircles.push({
       object: invert(mirror, c.object),
-      stroke: c.stroke,
+      // stroke: c.stroke,
       fill: c.stroke,
       radiusRatio: c.radiusRatio,
       result: true
@@ -169,8 +169,12 @@ $(function () {
       if (d.radiusRatio) {
         d3.select(this)
           .append('text')
-          .style('font-size', function (d) { return (d.object.radius * 1.5) + 'px'; })
-          .text(function (d) { return d.radiusRatio; });
+          .text(function (d) { return d.radiusRatio; })
+          .attr('transform', function (d) {
+            var bbox = this.getBBox();
+            var radius = Math.sqrt(bbox.width * bbox.width + bbox.height * bbox.height) / 2;
+            return 'scale(' + (d.object.radius / radius) + ')';
+          });
         d3.select(this)
           .append('title')
           .text(function (d) { return d.radiusRatio; });
